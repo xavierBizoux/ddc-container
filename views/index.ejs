@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title><%= title %></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+    <div id="myContent">Loading ...</div>
+    <section id="container" class="container-fluid">
+        <div class="row">
+            <h2 id="Model" class="col-6"></h2>
+            <h3 id="PriceTag" class="col-2"></h3>
+            <h3 class="col-4">Car's specifications</h3>
+        </div>
+        <div class="row">
+            <div id="carImage" class="col-8">
+                <img src="/images/car.jpg" usemap="#image-map" style="zoom:0.3;-o-transform: scale(0.3);-moz-transform: scale(0.3)">
+                <map name="image-map">
+                    <area target="" alt="WheelBase" title="WheelBase" href="" coords="1177,794,203" shape="circle">
+                    <area target="" alt="WheelBase" title="WheelBase" href="" coords="1880,425,111" shape="circle">
+                    <area target="" alt="Consumption" title="Consumption" href="" coords="1828,259,46" shape="circle">
+                    <area target="" alt="Engine" title="Engine" href="" coords="749,464,291" shape="circle">
+                </map>
+            </div>
+            <div id="carData" class="col-4">
+                <div id="hint" class="d-block">Click on the wheels, the hood or the tank hatch!</div>
+                <div id="specs" class="mt-2"></div>
+            </div>
+        </div>
+    </section>
+    <script src='/javascripts/sas-visualanalytics-thirdpartyvisualizations/util/contentUtil.js'></script>
+    <script src='/javascripts/sas-visualanalytics-thirdpartyvisualizations/util/messagingUtil.js'></script>
+    <script src='/javascripts/sas-visualanalytics-thirdpartyvisualizations/util/casUtil.js'></script>
+    <script src='/javascripts/sas-visualanalytics-thirdpartyvisualizations/util/jobUtil.js'></script>
+    <script src="/javascripts/jquery.min.js"></script>
+    <script src="/javascripts/umd/popper.min.js"></script>
+    <script type="text/javascript">
+        function viewCar(messageFromVA) {
+            console.log(messageFromVA);
+            // Define format for the PriceTag
+            const formatter = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 0
+            })
+            // Remove the Loading message
+            $("#myContent").empty();
+            // Display the model of the car
+            $("#Model").html(messageFromVA.data[0][0]);
+            // Display the formatted price tag
+            $("#PriceTag").html(formatter.format(messageFromVA.data[0][6]));
+            // Show the hint when changing model
+            $("#hint").removeClass().addClass('d-block');
+            // Remove specifications for the previously selected model
+            $("#specs").empty();
+            // Define the function executed when clicking on image map
+            $("area").on("click", function (e) {
+                // Prevents default action when area is clicked
+                e.preventDefault();
+                // Hide hint when displaying specifications
+                $("#hint").removeClass().addClass('d-none');
+                // Define which specifications should be displayed
+                switch (e.currentTarget.title) {
+                    case "WheelBase":
+                        var html = "<table class='table'>";
+                        html += "<tr><td>";
+                        html += messageFromVA.columns[7]["label"];
+                        html += "</td><td>";
+                        html += messageFromVA.data[0][7];
+                        html += "</td></tr>";
+                        html += "</table>";
+                        break;
+                    case "Engine":
+                        var html = "<table class='table'>";
+                        html += "<tr><td>";
+                        html += messageFromVA.columns[1]["label"];
+                        html += "</td><td>";
+                        html += messageFromVA.data[0][1];
+                        html += "</td></tr>";
+                        html += "<tr><td>";
+                        html += messageFromVA.columns[2]["label"];
+                        html += "</td><td>";
+                        html += messageFromVA.data[0][2];
+                        html += "</td></tr>";
+                        html += "<tr><td>";
+                        html += messageFromVA.columns[3]["label"];
+                        html += "</td><td>";
+                        html += messageFromVA.data[0][3];
+                        html += "</td></tr>";
+                        html += "</table>";
+                        break;
+                    case "Consumption":
+                        var html = "<table class='table'>";
+                        html += "<tr><td>";
+                        html += messageFromVA.columns[4]["label"];
+                        html += "</td><td>";
+                        html += messageFromVA.data[0][4];
+                        html += "</td></tr>";
+                        html += "<tr><td>";
+                        html += messageFromVA.columns[5]["label"];
+                        html += "</td><td>";
+                        html += messageFromVA.data[0][5];
+                        html += "</td></tr>";
+                        html += "</table>";
+                        break;
+                }
+                // Add the specifications in the defined div
+                $("#specs").html(html);
+            })
+        }
+        // Execute the viewCar function when DDC receives data from the VA report
+        va.messagingUtil.setOnDataReceivedCallback(viewCar);
+    </script>
+</body>
+
+</html>
