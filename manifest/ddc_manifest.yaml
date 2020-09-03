@@ -1,0 +1,111 @@
+
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ddc-server
+  labels:
+    app: ddc-server
+    app.kubernetes.io/part-of: ddc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ddc-server
+  template:
+    metadata:
+      labels:
+        app: ddc-server
+        app.kubernetes.io/part-of: ddc
+    spec:
+      containers:
+        - name: ddc-server
+          image: node:10-alpine
+          imagePullPolicy: IfNotPresent
+          # args:
+          #   - --copy-service
+          # volumeMounts:
+          #   - name: ddc-volume-users
+          #     mountPath: /container/service/slapd/assets/config/bootstrap/ldif/custom/bootstrap.ldif
+          #     subPath: bootstrap.ldif
+          #   - name: ddc-volume-overlay
+          #     mountPath: /container/service/slapd/assets/config/bootstrap/ldif/03-memberOf.ldif
+          #     subPath: 03-memberOf.ldif
+          #   - name: ldap-data
+          #     mountPath: /var/lib/ldap
+          #   - name: ldap-config
+          #     mountPath: /etc/ldap/slapd.d
+          #   - name: ldap-certs
+          #     mountPath: /container/service/slapd/assets/certs
+          ports:
+            - containerPort: 3000
+              name: ddc
+          # env:
+          #   - name: LDAP_TLS
+          #     value: "false"
+          #   - name: LDAP_ORGANISATION
+          #     value: "ddc"
+          #   - name: LDAP_DOMAIN
+          #     value: "ddc.com"
+          #   - name: LDAP_ADMIN_PASSWORD
+          #     value: "lnxsas"
+          #   - name: LDAP_CONFIG_PASSWORD
+          #     value: "lnxsas"
+          #   - name: LDAP_READONLY_USER
+          #     value: "false"
+          #   - name: LDAP_REMOVE_CONFIG_AFTER_SETUP
+          #     value: "false"
+          #   - name: LDAP_RFC2307BIS_SCHEMA
+          #     value: "true"
+          resources:
+            limits:
+              cpu: 500m
+              memory: 500Mi
+            requests:
+              cpu: 50m
+              memory: 50Mi
+      # volumes:
+      #   - name: ddc-volume-users
+      #     configMap:
+      #       name: ddc-bootstrap-users
+      #   - name: ddc-volume-overlay
+      #     configMap:
+      #       name: ddc-memberof-overlay
+      #   - name: ldap-data
+      #     emptyDir: {}
+      #   - name: ldap-config
+      #     emptyDir: {}
+      #   - name: ldap-certs
+      #     emptyDir: {}
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ddc-service
+  labels:
+    app: ddc-service
+    app.kubernetes.io/part-of: ddc
+spec:
+  ports:
+    - name: ddc-port
+      port: 3000
+      targetPort: 3000
+      protocol: TCP
+  selector:
+    app: ddc-server
+
+---
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: ddc-bootstrap-users
+#   labels:
+#     app.kubernetes.io/part-of: ddc
+# data:
+#   bootstrap.ldif: |
+#     version: 1
+
+#     dn: ou=users,dc=ddc,dc=com
+#     objectClass: organizationa
