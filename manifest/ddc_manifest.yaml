@@ -23,7 +23,12 @@ spec:
         - name: ddc-server
           image: node:10-alpine
           imagePullPolicy: IfNotPresent
+          command: ["node /bin/www"]
+          #args: ["HOSTNAME", "KUBERNETES_PORT"]
           # args:
+          #   - --copy-service
+          #   - --copy-service
+          #   - --copy-service
           #   - --copy-service
           # volumeMounts:
           #   - name: ddc-volume-users
