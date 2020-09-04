@@ -25,7 +25,7 @@ spec:
           image: fedora:latest
           command: ["/bin/sh", "-c"]
           args:
-            - dnf update;
+            - dnf update -y;
               dnf install -y git nodejs;
               git config --global http.sslVerify "false" ;
               git clone https://gelgitlab.race.sas.com/GEL/visualization/ddc-container.git /tmp/ddc-data/ ;
@@ -80,6 +80,9 @@ spec:
             requests:
               cpu: 50m
               memory: 50Mi
+          volumeMounts:
+            - mountPath: /home/node/ddc-container
+              name: ddc-data
 ---
 
 apiVersion: v1
