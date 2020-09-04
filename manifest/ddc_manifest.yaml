@@ -38,7 +38,6 @@ spec:
           args:
             - mkdir -p /home/node/app/node_modules ;
               chown -R node:node /home/node/app ;
-              su - node ;
               cd /home/node/app ;
               apt install git nodejs;
               git clone https://gelgitlab.race.sas.com/GEL/visualization/ddc-container.git ;
