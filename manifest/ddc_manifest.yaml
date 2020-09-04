@@ -29,7 +29,7 @@ spec:
             - name: GIT_SYNC_ROOT
               value: /home/node/app
             - name: GIT_SYNC_PERMISSIONS
-              value: 0777
+              value: "0777"
         - name: app-install
           image: busybox
           command: ["/bin/sh", "-c"]
