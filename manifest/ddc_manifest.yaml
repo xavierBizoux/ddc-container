@@ -70,7 +70,7 @@ spec:
         - name: ddc-server
           image: node:10-alpine
           imagePullPolicy: IfNotPresent
-          command: ["node /home/node/ddc-container/bin/www"]
+          command: ["node /tmp/ddc-data/bin/www"]
           ports:
             - containerPort: 3000
               name: ddc
@@ -82,7 +82,7 @@ spec:
               cpu: 50m
               memory: 50Mi
           volumeMounts:
-            - mountPath: /home/node/ddc-container
+            - mountPath: /tmp/ddc-data
               name: ddc-data
 ---
 
