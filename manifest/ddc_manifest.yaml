@@ -21,38 +21,50 @@ spec:
         - name: ddc-data
           emptyDir: {}
       initContainers:
-        - name: git-sync
-          image: k8s.gcr.io/git-sync:v3.1.5
-          imagePullPolicy: Always
-          env:
-            - name: GIT_SYNC_REPO
-              #value: https://gelgitlab.race.sas.com/GEL/visualization/ddc-container.git
-              value: https://github.com/xavierBizoux/SAS.git
-            - name: GIT_SYNC_BRANCH
-              value: master
-            - name: GIT_SYNC_ROOT
-              value: /tmp/ddc-data
-            - name: GIT_SYNC_PERMISSIONS
-              value: "0777"
-          securityContext:
-            runAsUser: 0
+        - name: app-install
+          image: fedora:latest
+          command: ["/bin/sh", "-c"]
+          args:
+            - dnf update;
+              dnf install -y git nodejs;
+              git config --global http.sslVerify "false" ;
+              git clone https://gelgitlab.race.sas.com/GEL/visualization/ddc-container.git /tmp/ddc-data/ ;
+              cd /tmp/ddc-data ;
+              npm install ;
           volumeMounts:
             - mountPath: /tmp/ddc-data
               name: ddc-data
-        - name: app-install
-          image: node:10-alpine
-          command: ["/bin/sh", "-c"]
-          args:
-            - mkdir -p /home/node/ddc-container/node_modules ;
-              chown -R node:node /home/node/ddc-container ;
-              cd /home/node/ddc-container ;
-              npm install ;
-              chown node:node . . ;
-          securityContext:
-            runAsUser: 0
-          volumeMounts:
-            - mountPath: /home/node/ddc-container
-              name: ddc-data
+        #- name: git-sync
+        #  image: k8s.gcr.io/git-sync:v3.1.5
+        #  imagePullPolicy: Always
+        #  env:
+        #    - name: GIT_SYNC_REPO
+        #      value: https://gelgitlab.race.sas.com/GEL/visualization/ddc-container.git
+        #    - name: GIT_SYNC_BRANCH
+        #      value: master
+        #    - name: GIT_SYNC_ROOT
+        #      value: /tmp/ddc-data
+        #    - name: GIT_SYNC_PERMISSIONS
+        #      value: "0777"
+        #  securityContext:
+        #    runAsUser: 0
+        #  volumeMounts:
+        #    - mountPath: /tmp/ddc-data
+        #      name: ddc-data
+        #- name: app-install
+        #  image: node:10-alpine
+        #  command: ["/bin/sh", "-c"]
+        #  args:
+        #    - mkdir -p /home/node/ddc-container/node_modules ;
+        #      chown -R node:node /home/node/ddc-container ;
+        #      cd /home/node/ddc-container ;
+        #      npm install ;
+        #      chown node:node . . ;
+        #  securityContext:
+        #    runAsUser: 0
+        #  volumeMounts:
+        #    - mountPath: /home/node/ddc-container
+        #      name: ddc-data
       containers:
         - name: ddc-server
           image: node:10-alpine
