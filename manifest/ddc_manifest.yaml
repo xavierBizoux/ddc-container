@@ -25,11 +25,11 @@ spec:
           imagePullPolicy: Always
           env:
             - name: GIT_SYNC_REPO
-              value: https://gitlab.sas.com/GEL/visualization/ddc-container.git
+              value: "https://gitlab.sas.com/GEL/visualization/ddc-container.git"
             - name: GIT_SYNC_BRANCH
-              value: master
+              value: "master"
             - name: GIT_SYNC_ROOT
-              value: /home/node/app
+              value: "/home/node/app"
             - name: GIT_SYNC_PERMISSIONS
               value: "0777"
           securityContext:
@@ -38,11 +38,10 @@ spec:
             image: busybox
             command: ["/bin/sh", "-c"]
             args:
-              - echo starting ;
-                mkdir -p /home/node/app/node_modules ;
+              - mkdir -p /home/node/app/node_modules ;
                 chown -R node:node /home/node/app ;
+                su - node ;
                 cd /home/node/app ;
-                su node ;
                 npm install ;
                 chown node:node . . ;
       containers:
