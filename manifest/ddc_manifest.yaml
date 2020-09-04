@@ -28,9 +28,9 @@ spec:
             mkdir -p /home/node/app/node_modules ;
             chown -R node:node /home/node/app ;
             cd /home/node/app ;
-            su node ;
-            npm install ;
-            chown node:node . . ;
+            #su node ;
+            #npm install ;
+            #chown node:node . . ;
       containers:
         - name: ddc-server
           image: node:10-alpine
