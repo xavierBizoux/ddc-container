@@ -19,7 +19,7 @@ spec:
     spec:
       initContainers:
         - name: git-sync
-          image: k8s.gcr.io/git-sync-amd64:v2.0.6
+          image: k8s.gcr.io/git-sync:v3.1.5
           imagePullPolicy: Always
           env:
             - name: GIT_SYNC_REPO
