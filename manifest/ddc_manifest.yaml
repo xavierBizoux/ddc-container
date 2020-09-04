@@ -1,5 +1,3 @@
-
-
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -21,18 +19,18 @@ spec:
     spec:
       initContainers:
         - name: git-sync
-            image: k8s.gcr.io/git-sync-amd64:v2.0.6
-            imagePullPolicy: Always
+          image: k8s.gcr.io/git-sync-amd64:v2.0.6
+          imagePullPolicy: Always
+          image: busybox
         - name: app-install
-            image: busybox
-            command: ["/bin/sh", "-c"]
-            args:
-              - mkdir -p /home/node/app/node_modules ;
-                chown -R node:node /home/node/app ;
-                su - node ;
-                cd /home/node/app ;
-                npm install ;
-                chown node:node . . ;
+          command: ["/bin/sh", "-c"]
+          args:
+            - mkdir -p /home/node/app/node_modules ;
+              chown -R node:node /home/node/app ;
+              su - node ;
+              cd /home/node/app ;
+              npm install ;
+              chown node:node . . ;
       containers:
         - name: ddc-server
           image: node:10-alpine
