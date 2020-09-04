@@ -48,6 +48,8 @@ spec:
               cd /home/node/app ;
               npm install ;
               chown node:node . . ;
+          securityContext:
+            runAsUser: 0
       containers:
         - name: ddc-server
           image: node:10-alpine
