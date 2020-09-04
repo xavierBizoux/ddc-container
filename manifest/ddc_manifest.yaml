@@ -24,14 +24,14 @@ spec:
           image: k8s.gcr.io/git-sync-amd64:v2.0.6
           imagePullPolicy: Always
           env:
-            - name: GIT_SYNC_REPO
-              value: https://gitlab.sas.com/GEL/visualization/ddc-container.git
-            - name: GIT_SYNC_BRANCH
-              value: master
-            - name: GIT_SYNC_ROOT
-              value: /home/node/app
-            - name: GIT_SYNC_PERMISSIONS
-              value: 0777
+          - name: GIT_SYNC_REPO
+            value: https://gitlab.sas.com/GEL/visualization/ddc-container.git
+          - name: GIT_SYNC_BRANCH
+            value: master
+          - name: GIT_SYNC_ROOT
+            value: /home/node/app
+          - name: GIT_SYNC_PERMISSIONS
+            value: 0777
         - name: app-install
             image: busybox
             command: ["/bin/sh", "-c"]
