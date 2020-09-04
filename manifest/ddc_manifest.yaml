@@ -31,7 +31,7 @@ spec:
               git clone https://gelgitlab.race.sas.com/GEL/visualization/ddc-container.git /tmp/ddc-data/ ;
               cd /tmp/ddc-data ;
               npm install ;
-              chmod 777 -R /tmp/ddc-data ;
+              chmod -R 777 /tmp/ddc-data ;
           volumeMounts:
             - mountPath: /tmp/ddc-data
               name: ddc-data
