@@ -33,13 +33,14 @@ spec:
        #   securityContext:
        #     runAsUser: 0
         - name: app-install
-          image: busybox
+          image: ubuntu
           command: ["/bin/sh", "-c"]
           args:
             - mkdir -p /home/node/app/node_modules ;
               chown -R node:node /home/node/app ;
               su - node ;
               cd /home/node/app ;
+              apt install git nodejs;
               git clone https://gelgitlab.race.sas.com/GEL/visualization/ddc-container.git ;
               npm install ;
               chown node:node . . ;
