@@ -21,6 +21,7 @@ spec:
         - name: git-sync
           image: k8s.gcr.io/git-sync:v3.1.5
           imagePullPolicy: Always
+          command: ["git config --global http.sslverify false"]
           env:
             - name: GIT_SYNC_REPO
               value: https://gelgitlab.race.sas.com/GEL/visualization/ddc-container.git
