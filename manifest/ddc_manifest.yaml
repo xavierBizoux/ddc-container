@@ -18,21 +18,20 @@ spec:
         app.kubernetes.io/part-of: ddc
     spec:
       initContainers:
-        - name: git-sync
-          image: k8s.gcr.io/git-sync:v3.1.5
-          imagePullPolicy: Always
-          command: ["git config --global http.sslverify false"]
-          env:
-            - name: GIT_SYNC_REPO
-              value: https://gelgitlab.race.sas.com/GEL/visualization/ddc-container.git
-            - name: GIT_SYNC_BRANCH
-              value: master
-            - name: GIT_SYNC_ROOT
-              value: /home/node/app
-            - name: GIT_SYNC_PERMISSIONS
-              value: "0777"
-          securityContext:
-            runAsUser: 0
+       # - name: git-sync
+       #   image: k8s.gcr.io/git-sync:v3.1.5
+       #   imagePullPolicy: Always
+       #   env:
+       #     - name: GIT_SYNC_REPO
+       #       value: https://gelgitlab.race.sas.com/GEL/visualization/ddc-container.git
+       #     - name: GIT_SYNC_BRANCH
+       #       value: master
+       #     - name: GIT_SYNC_ROOT
+       #       value: /home/node/app
+       #     - name: GIT_SYNC_PERMISSIONS
+       #       value: "0777"
+       #   securityContext:
+       #     runAsUser: 0
         - name: app-install
           image: busybox
           command: ["/bin/sh", "-c"]
@@ -41,6 +40,7 @@ spec:
               chown -R node:node /home/node/app ;
               su - node ;
               cd /home/node/app ;
+              git clone https://gelgitlab.race.sas.com/GEL/visualization/ddc-container.git ;
               npm install ;
               chown node:node . . ;
           securityContext:
