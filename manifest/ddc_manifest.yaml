@@ -26,7 +26,7 @@ spec:
           imagePullPolicy: Always
           env:
             - name: GIT_SYNC_REPO
-              value: https://gelgitlab.race.sas.com/GEL/visualization/ddc-container.git
+              value: http://gelgitlab.race.sas.com/GEL/visualization/ddc-container.git
             - name: GIT_SYNC_BRANCH
               value: master
             - name: GIT_SYNC_ROOT
