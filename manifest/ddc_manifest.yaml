@@ -29,7 +29,7 @@ spec:
               mountPath: /tmp/git
           env:
             - name: GIT_SYNC_REPO
-              value: http://gelgitlab.race.sas.com/GEL/visualization/ddc-container.git
+              value: https://gelgitlab.race.sas.com/GEL/visualization/ddc-container.git
             - name: GIT_SYNC_BRANCH
               value: master
             - name: GIT_SYNC_ROOT
