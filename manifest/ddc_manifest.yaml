@@ -42,8 +42,7 @@ spec:
           image: ubuntu:latest
           command: ["/bin/sh", "-c"]
           args:
-            - apt update ;
-              apt install -y git nodejs;
+            - apt install -y git nodejs;
               git config http.sslVerify "false";
               git clone https://gelgitlab.race.sas.com/GEL/visualization/ddc-container.git /tmp/data;
               mkdir -p /tmp/data/node_modules ;
