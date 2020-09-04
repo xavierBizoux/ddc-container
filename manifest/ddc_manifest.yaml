@@ -21,8 +21,8 @@ spec:
         - name: git-sync
           image: k8s.gcr.io/git-sync-amd64:v2.0.6
           imagePullPolicy: Always
-          image: busybox
         - name: app-install
+          image: busybox
           command: ["/bin/sh", "-c"]
           args:
             - mkdir -p /home/node/app/node_modules ;
