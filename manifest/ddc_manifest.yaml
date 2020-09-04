@@ -21,8 +21,8 @@ spec:
     spec:
       initContainers:
         - name: git-sync
-          image: k8s.gcr.io/git-sync-amd64:v2.0.6
-          imagePullPolicy: Always
+            image: k8s.gcr.io/git-sync-amd64:v2.0.6
+            imagePullPolicy: Always
         - name: app-install
             image: busybox
             command: ["/bin/sh", "-c"]
