@@ -22,20 +22,20 @@ spec:
       initContainers:
       - name: bootstrap-content
         image: busybox:1.28
-        # command: ['sh', '-c', "until nslookup myservice.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for myservice; sleep 2; done"]
-        #command: ['sh', '-c', "mkdir -p /home/node/app/node_modules "]
         command: ["/bin/sh", "-c"]
         args:
           - echo starting ;
             mkdir -p /home/node/app/node_modules ;
-             echo other ;
-            ls -la /backups;
-            echo done;
+            chown -R node:node /home/node/app
+            cd /home/node/app
+            su node
+            npm install
+            chown node:node . .
       containers:
         - name: ddc-server
           image: node:10-alpine
           imagePullPolicy: IfNotPresent
-          command: ["node /bin/www"]
+          command: ["node bin/www"]
           #args: ["HOSTNAME", "KUBERNETES_PORT"]
           # args:
           #   - --copy-service
