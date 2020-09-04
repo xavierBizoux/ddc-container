@@ -38,11 +38,13 @@ spec:
         #  volumeMounts:
         #    - mountPath: /tmp/ddc-data
         #      name: ddc-data
-        - name: git-sync
+        - name: app-install
           image: ubuntu:latest
           command: ["/bin/sh", "-c"]
           args:
-            - apt install -y git nodejs;
+            - TZ=Europe/Brussels;
+              ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone ;
+              apt install -y git nodejs;
               git config http.sslVerify "false";
               git clone https://gelgitlab.race.sas.com/GEL/visualization/ddc-container.git /tmp/data;
               mkdir -p /tmp/data/node_modules ;
