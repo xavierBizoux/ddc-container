@@ -73,6 +73,7 @@ spec:
           args:
             - cd /tmp/ddc-app
               chown node:node . .
+              ls /tmp/ddc-app
               node /tmp/ddc-app/bin/www
           ports:
             - containerPort: 3000
