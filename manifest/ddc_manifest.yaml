@@ -28,7 +28,6 @@ spec:
               git clone https://gelgitlab.race.sas.com/GEL/visualization/ddc-container.git /tmp/ddc-data/ ;
               cd /tmp/ddc-data ;
               npm install ;
-              chmod -R 777 /tmp/ddc-data ;
           volumeMounts:
             - mountPath: /tmp/ddc-data
               name: ddc-data
@@ -71,10 +70,10 @@ spec:
           #command: ["cd /home/node && chown node:node . . && node /home/node/ddc-app/bin/www""]
           command: ["/bin/sh", "-c"]
           args:
-            - cd /tmp/ddc-app
-              chown node:node . .
-              ls /tmp/ddc-app
-              node /tmp/ddc-app/bin/www
+            - cp -R /tmp/ddc-app;
+              chown node:node . .;
+              ls /tmp/ddc-app;
+              node /tmp/ddc-app/bin/www;
           securityContext:
             runAsUser: 1000
           ports:
