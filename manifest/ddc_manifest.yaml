@@ -67,7 +67,7 @@ spec:
         - name: ddc-server
           image: node:10-alpine
           imagePullPolicy: IfNotPresent
-          command: ["cd /home/node && chown node:node . . && ls /home/node"]
+          command: ["cd /tmp/ddc-data && chown node:node . . && ls /home/node"]
           #command: ["cd /home/node && chown node:node . . && node /home/node/ddc-app/bin/www""]
           ports:
             - containerPort: 3000
@@ -80,7 +80,7 @@ spec:
               cpu: 50m
               memory: 50Mi
           volumeMounts:
-            - mountPath: /home/node/ddc-app
+            - mountPath: /tmp/ddc-app
               name: ddc-data
       volumes:
         - name: ddc-data
