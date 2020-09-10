@@ -27,19 +27,6 @@ spec:
           volumeMounts:
             - mountPath: /tmp/ddc-data
               name: ddc-data
-        #- name: app-install
-        #  image: fedora:latest
-        #  command: ["/bin/sh", "-c"]
-        #  args:
-        #    - dnf update -y;
-        #      dnf install -y git nodejs;
-        #      git config --global http.sslVerify "false" ;
-        #      git clone https://gelgitlab.race.sas.com/GEL/visualization/ddc-container.git /tmp/ddc-data/ ;
-        #      cd /tmp/ddc-data ;
-        #      npm install ;
-        #  volumeMounts:
-        #    - mountPath: /tmp/ddc-data
-        #      name: ddc-data
       containers:
         - name: ddc-server
           image: node:10-alpine
