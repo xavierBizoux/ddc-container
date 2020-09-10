@@ -19,7 +19,7 @@ spec:
     spec:
       initContainers:
         - name: app-download
-          image: alpine/git
+          image: alpine/git:latest
           command: ["/bin/sh", "-c"]
           args:
             git config --global http.sslVerify "false" ;
