@@ -71,9 +71,9 @@ spec:
           #command: ["cd /home/node && chown node:node . . && node /home/node/ddc-app/bin/www""]
           command: ["/bin/sh", "-c"]
           args:
-            - cd /tmp/ddc-data
+            - cd /tmp/ddc-app
               chown node:node . .
-              node /tmp/ddc-data/ddc-app/bin/www
+              node /tmp/ddc-app/bin/www
           ports:
             - containerPort: 3000
               name: ddc
