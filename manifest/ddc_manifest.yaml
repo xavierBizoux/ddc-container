@@ -56,6 +56,7 @@ spec:
       volumes:
         - name: ddc-data
           emptyDir: {}
+
 ---
 
 apiVersion: v1
@@ -73,3 +74,20 @@ spec:
       protocol: TCP
   selector:
     app: ddc-server
+
+---
+
+  apiVersion: v1
+  kind: Ingress
+  metadata:
+    name: ddc-ingress
+    annotations:
+      ingress.kubernetes.io/rewrite-target: /
+  spec:
+    rules:
+    - http:
+        paths:
+          - path: /ddc
+            backend:
+              serviceName: ddc-service
+              servicePort: 3000
