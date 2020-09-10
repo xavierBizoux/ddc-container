@@ -17,9 +17,6 @@ spec:
         app: ddc-server
         app.kubernetes.io/part-of: ddc
     spec:
-      volumes:
-        - name: ddc-data
-          emptyDir: {}
       initContainers:
         - name: app-install
           image: fedora:latest
@@ -84,6 +81,9 @@ spec:
           volumeMounts:
             - mountPath: /home/node/ddc-app
               name: ddc-data
+      volumes:
+        - name: ddc-data
+          emptyDir: {}
 ---
 
 apiVersion: v1
