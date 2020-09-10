@@ -75,6 +75,8 @@ spec:
               chown node:node . .
               ls /tmp/ddc-app
               node /tmp/ddc-app/bin/www
+          securityContext:
+            runAsUser: node
           ports:
             - containerPort: 3000
               name: ddc
