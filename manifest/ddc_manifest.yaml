@@ -70,7 +70,7 @@ spec:
           #command: ["cd /home/node && chown node:node . . && node /home/node/ddc-app/bin/www""]
           command: ["/bin/sh", "-c"]
           args:
-            - cp -R /tmp/ddc-app;
+            - cd /tmp/ddc-app;
               chown node:node . .;
               ls /tmp/ddc-app;
               node /tmp/ddc-app/bin/www;
