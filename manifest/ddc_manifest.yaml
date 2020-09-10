@@ -69,6 +69,11 @@ spec:
           imagePullPolicy: IfNotPresent
           command: ["cd /tmp/ddc-data && chown node:node . . && ls /tmp/ddc-data"]
           #command: ["cd /home/node && chown node:node . . && node /home/node/ddc-app/bin/www""]
+          command: ["/bin/sh", "-c"]
+          args:
+            - cd /tmp/ddc-data
+              chown node:node . .
+              node /tmp/ddc-data/ddc-app/bin/www
           ports:
             - containerPort: 3000
               name: ddc
