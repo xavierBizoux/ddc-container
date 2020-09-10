@@ -18,19 +18,28 @@ spec:
         app.kubernetes.io/part-of: ddc
     spec:
       initContainers:
-        - name: app-install
-          image: fedora:latest
+        - name: app-download
+          image: alpine/git
           command: ["/bin/sh", "-c"]
           args:
-            - dnf update -y;
-              dnf install -y git nodejs;
-              git config --global http.sslVerify "false" ;
-              git clone https://gelgitlab.race.sas.com/GEL/visualization/ddc-container.git /tmp/ddc-data/ ;
-              cd /tmp/ddc-data ;
-              npm install ;
+            git config --global http.sslVerify "false" ;
+            git clone https://gelgitlab.race.sas.com/GEL/visualization/ddc-container.git /tmp/ddc-data/ ;
           volumeMounts:
             - mountPath: /tmp/ddc-data
               name: ddc-data
+        #- name: app-install
+        #  image: fedora:latest
+        #  command: ["/bin/sh", "-c"]
+        #  args:
+        #    - dnf update -y;
+        #      dnf install -y git nodejs;
+        #      git config --global http.sslVerify "false" ;
+        #      git clone https://gelgitlab.race.sas.com/GEL/visualization/ddc-container.git /tmp/ddc-data/ ;
+        #      cd /tmp/ddc-data ;
+        #      npm install ;
+        #  volumeMounts:
+        #    - mountPath: /tmp/ddc-data
+        #      name: ddc-data
         #- name: git-sync
         #  image: k8s.gcr.io/git-sync:v3.1.5
         #  imagePullPolicy: Always
@@ -66,11 +75,10 @@ spec:
         - name: ddc-server
           image: node:10-alpine
           imagePullPolicy: IfNotPresent
-          #command: ["cd /tmp/ddc-data && chown node:node . . && ls /tmp/ddc-data"]
-          #command: ["cd /home/node && chown node:node . . && node /home/node/ddc-app/bin/www""]
           command: ["/bin/sh", "-c"]
           args:
             - cd /tmp/ddc-app;
+              npm install;
               chown node:node . .;
               ls /tmp/ddc-app;
               node /tmp/ddc-app/bin/www;
