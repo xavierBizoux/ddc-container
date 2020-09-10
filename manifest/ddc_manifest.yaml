@@ -76,7 +76,7 @@ spec:
               ls /tmp/ddc-app
               node /tmp/ddc-app/bin/www
           securityContext:
-            runAsUser: node
+            runAsUser: 1000
           ports:
             - containerPort: 3000
               name: ddc
