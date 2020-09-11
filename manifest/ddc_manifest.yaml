@@ -31,12 +31,11 @@ spec:
         - name: ddc-server
           image: node:10-alpine
           imagePullPolicy: IfNotPresent
+          workingDir: /tmp/ddc-app
           command: ["/bin/sh", "-c"]
           args:
-            - cd /tmp/ddc-app;
-              npm install;
+            - npm install;
               chown node:node . .;
-              ls /tmp/ddc-app;
               node /tmp/ddc-app/bin/www;
           securityContext:
             runAsUser: 1000
@@ -74,3 +73,6 @@ spec:
       protocol: TCP
   selector:
     app: ddc-server
+
+---
+

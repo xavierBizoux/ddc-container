@@ -20,11 +20,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/javascripts', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
 app.use('/javascripts', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
-app.use('/javascripts', express.static(__dirname + '/node_modules/popper.js/dist')); // redirect JS jQuery
+app.use('/javascripts', express.static(__dirname + '/node_modules/popper.js/dist')); // redirect Popper JS
 app.use('/stylesheets', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/ddc', indexRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
