@@ -22,7 +22,7 @@ app.use(config.baseUrl, express.static(path.join(__dirname, 'public')));
 app.use(config.baseUrl + '/javascripts/bootstrap', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/js'))); // redirect bootstrap JS
 app.use(config.baseUrl + '/javascripts/jquery', express.static(path.join(__dirname, '/node_modules/jquery/dist'))); // redirect JS jQuery
 app.use(config.baseUrl + '/javascripts/popper', express.static(path.join(__dirname, '/node_modules/popper.js/dist'))); // redirect Popper JS
-app.use(config.baseUrl + '/javascripts/sas', express.static(path.join(__dirname, '/public/javascripts/sas-visualanalytics-thirdpartyvisualizations/util')));
+app.use(config.baseUrl + '/javascripts/sas', express.static(path.join(__dirname, '/libs/sas-visualanalytics-thirdpartyvisualizations')));
 app.use(config.baseUrl + '/stylesheets/bootstrap', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/css'))); // redirect CSS bootstrap
 
 app.use(config.baseUrl, indexRouter);
