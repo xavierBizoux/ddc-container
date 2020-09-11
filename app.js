@@ -27,8 +27,10 @@ app.use('/stylesheets', express.static(__dirname + '/node_modules/bootstrap/dist
 app.use(config.baseUrl, indexRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
+app.use(function (req, res, next) {
+  var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+  res.send(fullUrl);
+  //next(createError(404));
 });
 
 // error handler
