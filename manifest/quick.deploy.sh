@@ -6,10 +6,25 @@
 
 kubectl -n big apply -f https://gelgitlab.race.sas.com/GEL/visualization/ddc-container/-/raw/manifest_work/manifest/ddc_manifest.yaml
 
-kubectl -n big get pods | grep ddc
-kubectl -n big describe pod ddc-server-8564754859-kpwjh
-   kubectl -n big get pods | grep ddc
- kubectl -n big logs  ddc-server-8564754859-kpwjh
+cat << EOF > /tmp/ddc-ingress.yaml
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ddc-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+    - host: big.$(hostname -f)
+      http:
+        paths:
+          - backend:
+              serviceName: ddc-service
+              servicePort: 3000
+            path: /ddc
+EOF
 
+kubectl apply -f /tmp/ddc-ingress.yaml -n big
 
- docker run -it --rm node:10-alpine ls /bin
+printf "URL for DDC ingress: http://big.$(hostname -f)/ddc \n"
