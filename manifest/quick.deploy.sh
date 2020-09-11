@@ -1,11 +1,9 @@
 #!/bin/bash
-
-# asume we are in race.
-
-# straight kubectl apply
+# Apply ddc_manifest.yaml to create the needed Deployment and Service
 
 kubectl -n big apply -f https://gelgitlab.race.sas.com/GEL/visualization/ddc-container/-/raw/manifest_work/manifest/ddc_manifest.yaml
 
+# Create a manifest to define the Ingress resource
 cat << EOF > /tmp/ddc-ingress.yaml
 ---
 apiVersion: extensions/v1beta1
@@ -25,6 +23,8 @@ spec:
             path: /ddc
 EOF
 
+# Apply the newly yaml file
 kubectl apply -f /tmp/ddc-ingress.yaml -n big
 
+# Print the URL of the web application
 printf "URL for DDC ingress: http://big.$(hostname -f)/ddc \n"
