@@ -19,18 +19,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/javascripts', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
-app.use('/javascripts', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
-app.use('/javascripts', express.static(__dirname + '/node_modules/popper.js/dist')); // redirect Popper JS
-app.use('/stylesheets', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
+app.use('/javascripts', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/js'))); // redirect bootstrap JS
+app.use('/javascripts', express.static(path.join(__dirname, '/node_modules/jquery/dist'))); // redirect JS jQuery
+app.use('/javascripts', express.static(path.join(__dirname, '/node_modules/popper.js/dist'))); // redirect Popper JS
+app.use('/stylesheets', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/css'))); // redirect CSS bootstrap
 
 app.use(config.baseUrl, indexRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-  res.send(fullUrl);
-  //next(createError(404));
+  next(createError(404));
 });
 
 // error handler
