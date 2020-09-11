@@ -18,11 +18,11 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/javascripts', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/js'))); // redirect bootstrap JS
-app.use('/javascripts', express.static(path.join(__dirname, '/node_modules/jquery/dist'))); // redirect JS jQuery
-app.use('/javascripts', express.static(path.join(__dirname, '/node_modules/popper.js/dist'))); // redirect Popper JS
-app.use('/stylesheets', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/css'))); // redirect CSS bootstrap
+app.use(config.baseUrl, express.static(path.join(__dirname, 'public')));
+app.use(config.baseUrl + '/javascripts', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/js'))); // redirect bootstrap JS
+app.use(config.baseUrl + '/javascripts', express.static(path.join(__dirname, '/node_modules/jquery/dist'))); // redirect JS jQuery
+app.use(config.baseUrl + '/javascripts', express.static(path.join(__dirname, '/node_modules/popper.js/dist'))); // redirect Popper JS
+app.use(config.baseUrl + '/stylesheets', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/css'))); // redirect CSS bootstrap
 
 app.use(config.baseUrl, indexRouter);
 
