@@ -5,7 +5,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+
+const config = require('./config.js');
 
 var app = express();
 
@@ -17,17 +18,17 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/javascripts', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
-app.use('/javascripts', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
-app.use('/javascripts', express.static(__dirname + '/node_modules/popper.js/dist')); // redirect JS jQuery
-app.use('/stylesheets', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
+app.use(config.baseUrl, express.static(path.join(__dirname, 'public')));
+app.use(config.baseUrl + '/javascripts/bootstrap', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/js'))); // redirect bootstrap JS
+app.use(config.baseUrl + '/javascripts/jquery', express.static(path.join(__dirname, '/node_modules/jquery/dist'))); // redirect JS jQuery
+app.use(config.baseUrl + '/javascripts/popper', express.static(path.join(__dirname, '/node_modules/popper.js/dist'))); // redirect Popper JS
+app.use(config.baseUrl + '/javascripts/sas', express.static(path.join(__dirname, '/libs/sas-visualanalytics-thirdpartyvisualizations')));
+app.use(config.baseUrl + '/stylesheets/bootstrap', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/css'))); // redirect CSS bootstrap
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use(config.baseUrl, indexRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 

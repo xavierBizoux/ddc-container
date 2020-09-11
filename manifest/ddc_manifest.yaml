@@ -1,0 +1,78 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ddc-server
+  labels:
+    app: ddc-server
+    app.kubernetes.io/part-of: ddc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ddc-server
+  template:
+    metadata:
+      labels:
+        app: ddc-server
+        app.kubernetes.io/part-of: ddc
+    spec:
+      initContainers:
+        - name: app-download
+          image: alpine/git:latest
+          command: ["/bin/sh", "-c"]
+          args:
+            - git config --global http.sslVerify "false" ;
+              git clone --branch manifest_work https://gelgitlab.race.sas.com/GEL/visualization/ddc-container.git /tmp/ddc-data/ ;
+          volumeMounts:
+            - mountPath: /tmp/ddc-data
+              name: ddc-data
+      containers:
+        - name: ddc-server
+          image: node:10-alpine
+          imagePullPolicy: IfNotPresent
+          workingDir: /tmp/ddc-app
+          command: ["/bin/sh", "-c"]
+          args:
+            - npm install;
+              chown node:node . .;
+              node /tmp/ddc-app/bin/www;
+          securityContext:
+            runAsUser: 1000
+          ports:
+            - containerPort: 3000
+              name: ddc
+          resources:
+            limits:
+              cpu: 500m
+              memory: 500Mi
+            requests:
+              cpu: 50m
+              memory: 50Mi
+          volumeMounts:
+            - mountPath: /tmp/ddc-app
+              name: ddc-data
+      volumes:
+        - name: ddc-data
+          emptyDir: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ddc-service
+  labels:
+    app: ddc-service
+    app.kubernetes.io/part-of: ddc
+spec:
+  ports:
+    - name: ddc-port
+      port: 3000
+      targetPort: 3000
+      protocol: TCP
+  selector:
+    app: ddc-server
+
+---
+
