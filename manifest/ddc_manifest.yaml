@@ -23,7 +23,7 @@ spec:
           command: ["/bin/sh", "-c"]
           args:
             - git config --global http.sslVerify "false" ;
-              git clone --branch manifest_work https://gelgitlab.race.sas.com/GEL/visualization/ddc-container.git /tmp/ddc-data/ ;
+              git clone https://gelgitlab.race.sas.com/GEL/visualization/ddc-container.git /tmp/ddc-data/ ;
           volumeMounts:
             - mountPath: /tmp/ddc-data
               name: ddc-data
