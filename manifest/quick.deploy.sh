@@ -1,7 +1,7 @@
 #!/bin/bash
 # Apply ddc_manifest.yaml to create the needed Deployment and Service
 
-kubectl -n big apply -f https://gelgitlab.race.sas.com/GEL/visualization/ddc-container/-/blob/master/manifest/ddc_manifest.yaml
+kubectl -n big apply -f https://gelgitlab.race.sas.com/GEL/visualization/ddc-container/-/raw/master/manifest/ddc_manifest.yaml
 
 # Create a manifest to define the Ingress resource
 cat << EOF > /tmp/ddc-ingress.yaml
