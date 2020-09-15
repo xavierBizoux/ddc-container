@@ -1,6 +1,6 @@
 {
-  "name": "node-sas",
-  "version": "0.0.0",
+  "name": "ddc-container",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www"
